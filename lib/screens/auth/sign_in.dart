@@ -24,10 +24,10 @@ class _SignInState extends State<SignIn> {
           child: RaisedButton(
             onPressed: () async {
               dynamic user = await _auth.signInAnon();
-              if (user == null) {
-                print("User is Null");
+              if (user != null) {
+                print("Logged in User: ${user.uid} ");
               } else {
-                print("Logged in User: $user");
+                print("User is Null");
               }
             },
             child: Text("Sign In Anon"),
