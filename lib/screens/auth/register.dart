@@ -16,9 +16,10 @@ class _RegisterState extends State<Register> {
   // form fields state
   String email = "";
   String password = "";
+  String error = "";
 
   //formKey
-  final _formKey = GlobalKey<FormFieldState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,98 +30,123 @@ class _RegisterState extends State<Register> {
         title: Text("Sign Up"),
         elevation: 0.0,
       ),
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Email",
+      body: ListView(
+        children: [
+          Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20.0,
                   ),
-                  validator: (value) {
-                    return value.isEmpty ? "Email can not be empty" : null;
-                  },
-                  onChanged: (value) {
-                    setState(() {
-                      email = value;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Password",
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                    ),
+                    validator: (value) {
+                      return value.isEmpty ? "Email can not be empty" : null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        email = value;
+                      });
+                    },
                   ),
-                  validator: (value) {
-                    return value.isEmpty ? "Passsword can not be empty" : null;
-                  },
-                  obscureText: true,
-                  onChanged: (value) {
-                    setState(() {
-                      password = value;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Confirm Password",
+                  SizedBox(
+                    height: 20.0,
                   ),
-                  validator: (value) {
-                    return value != password ? "Password do not match" : null;
-                  },
-                  obscureText: true,
-                  onChanged: (value) {
-                    setState(() {
-                      password = value;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                RaisedButton(
-                  color: Colors.pink[400],
-                  onPressed: () async {
-                    print("Email: $email");
-                    print("Password : $password");
-                  },
-                  child: Text(
-                    "Regiter",
-                    style: TextStyle(
-                      color: Colors.white,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                    ),
+                    validator: (value) {
+                      return value.length < 6
+                          ? "Passsword must be greater than 6 character "
+                          : null;
+                    },
+                    obscureText: true,
+                    onChanged: (value) {
+                      setState(() {
+                        password = value;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Confirm Password",
+                    ),
+                    validator: (value) {
+                      if (value.length < 6) {
+                        return "Passsword must be greater than 6 character ";
+                      }
+                      if (value != password) {
+                        return "Passsword do not match ";
+                      }
+                      return null;
+                    },
+                    obscureText: true,
+                    onChanged: (value) {
+                      setState(() {
+                        password = value;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Text(
+                    error,
+                    style: TextStyle(fontSize: 14.0, color: Colors.red),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  RaisedButton(
+                    color: Colors.pink[400],
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        dynamic user =
+                            await _auth.registerWithEmail(email, password);
+                        if (user == null) {
+                          setState(() {
+                            error = "Provide the valid email address";
+                          });
+                        }
+                      }
+                    },
+                    child: Text(
+                      "Register",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                FlatButton.icon(
-                  onPressed: () {
-                    widget.toggleView();
-                  },
-                  icon: Icon(Icons.person),
-                  label: Text(
-                    "Have account ? Log in",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                    ),
+                  SizedBox(
+                    height: 10.0,
                   ),
-                )
-              ],
+                  FlatButton.icon(
+                    onPressed: () {
+                      widget.toggleView();
+                    },
+                    icon: Icon(Icons.person),
+                    label: Text(
+                      "Have account ? Log in",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

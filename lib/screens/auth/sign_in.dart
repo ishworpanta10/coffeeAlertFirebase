@@ -16,9 +16,10 @@ class _SignInState extends State<SignIn> {
   // form fields state
   String email = "";
   String password = "";
+  String error = "";
 
   // formkey
-  final _formKey = GlobalKey<FormFieldState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,81 +30,100 @@ class _SignInState extends State<SignIn> {
         title: Text("Sign In"),
         elevation: 0.0,
       ),
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Email",
+      body: ListView(
+        children: [
+          Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20.0,
                   ),
-                  validator: (value) {
-                    return value.isEmpty ? "Email can not be empty" : null;
-                  },
-                  onChanged: (value) {
-                    setState(() {
-                      email = value;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Password",
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                    ),
+                    validator: (value) {
+                      return value.isEmpty ? "Email can not be empty" : null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        email = value;
+                      });
+                    },
                   ),
-                  validator: (value) {
-                    return value.isEmpty ? "Passsword can not be empty" : null;
-                  },
-                  obscureText: true,
-                  onChanged: (value) {
-                    setState(() {
-                      password = value;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                RaisedButton(
-                  color: Colors.pink[400],
-                  onPressed: () async {
-                    print("Email: $email");
-                    print("Password : $password");
-                  },
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                      color: Colors.white,
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                    ),
+                    validator: (value) {
+                      return value.length < 6
+                          ? "Passsword can not be less than 6 character"
+                          : null;
+                    },
+                    obscureText: true,
+                    onChanged: (value) {
+                      setState(() {
+                        password = value;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Text(
+                    error,
+                    style: TextStyle(fontSize: 14.0, color: Colors.red),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  RaisedButton(
+                    color: Colors.pink[400],
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        dynamic user =
+                            await _auth.signInWithEmail(email, password);
+                        if (user == null) {
+                          setState(() {
+                            error = "Invalid Credential";
+                          });
+                        }
+                      }
+                    },
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                FlatButton.icon(
-                  onPressed: () {
-                    widget.toggleView();
-                  },
-                  icon: Icon(Icons.person),
-                  label: Text(
-                    "Have no account ? Register",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                    ),
+                  SizedBox(
+                    height: 10.0,
                   ),
-                )
-              ],
+                  FlatButton.icon(
+                    onPressed: () {
+                      widget.toggleView();
+                    },
+                    icon: Icon(Icons.person),
+                    label: Text(
+                      "Have no account ? Register",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

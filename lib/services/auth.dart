@@ -37,8 +37,30 @@ class AuthService {
   }
 
   // sign in with email and psswd
+  Future<CustomUser> signInWithEmail(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      User user = userCredential.user;
+      return _userFromFirebase(user);
+    } catch (e) {
+      print("Email Sign In Error: $e");
+      return null;
+    }
+  }
 
   // register with email and psswd
+  Future registerWithEmail(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User user = userCredential.user;
+      return _userFromFirebase(user);
+    } catch (e) {
+      print("Email Register Error: ${e.toString()}");
+      return null;
+    }
+  }
 
   // sign out
   Future<void> signOut() async {
