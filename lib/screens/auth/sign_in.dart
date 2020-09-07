@@ -1,5 +1,7 @@
 import 'package:coffeealert/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -118,7 +120,25 @@ class _SignInState extends State<SignIn> {
                         fontSize: 14.0,
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  GoogleSignInButton(
+                    darkMode: true,
+                    onPressed: () async {
+                      dynamic user = await _auth.signInWithGoogle();
+                      if (user == null) {
+                        setState(() {
+                          error = "Error Goolgle Sign In";
+                        });
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  
                 ],
               ),
             ),
