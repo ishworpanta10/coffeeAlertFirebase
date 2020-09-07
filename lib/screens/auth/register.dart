@@ -1,23 +1,23 @@
 import 'package:coffeealert/services/auth.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
-  SignIn({@required this.toggleView});
 
+  Register({@required this.toggleView});
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
-  // Auth service
+class _RegisterState extends State<Register> {
+  // Auth Service
   final AuthService _auth = AuthService();
 
   // form fields state
   String email = "";
   String password = "";
 
-  // formkey
+  //formKey
   final _formKey = GlobalKey<FormFieldState>();
 
   @override
@@ -26,7 +26,7 @@ class _SignInState extends State<SignIn> {
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
-        title: Text("Sign In"),
+        title: Text("Sign Up"),
         elevation: 0.0,
       ),
       body: Center(
@@ -72,6 +72,23 @@ class _SignInState extends State<SignIn> {
                 SizedBox(
                   height: 20.0,
                 ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Confirm Password",
+                  ),
+                  validator: (value) {
+                    return value != password ? "Password do not match" : null;
+                  },
+                  obscureText: true,
+                  onChanged: (value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
                 RaisedButton(
                   color: Colors.pink[400],
                   onPressed: () async {
@@ -79,7 +96,7 @@ class _SignInState extends State<SignIn> {
                     print("Password : $password");
                   },
                   child: Text(
-                    "Login",
+                    "Regiter",
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -94,7 +111,7 @@ class _SignInState extends State<SignIn> {
                   },
                   icon: Icon(Icons.person),
                   label: Text(
-                    "Have no account ? Register",
+                    "Have account ? Log in",
                     style: TextStyle(
                       fontSize: 14.0,
                     ),
