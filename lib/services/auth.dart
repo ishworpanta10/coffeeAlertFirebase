@@ -106,15 +106,15 @@ class AuthService {
 
   // register with email and psswd
   Future registerWithEmail(String email, String password) async {
-    try {
-      UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      User user = userCredential.user;
-      return _userFromFirebase(user);
-    } catch (e) {
-      print("Email Register Error: ${e.toString()}");
-      return null;
-    }
+    // try {
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    User user = userCredential.user;
+    return _userFromFirebase(user);
+    // } catch (e) {
+    //   print("Email Register Error: ${e.toString()}");
+    //   return null;
+    // }
   }
 
   // sign out
@@ -123,6 +123,16 @@ class AuthService {
       await _auth.signOut();
     } catch (e) {
       print("Error in Log Out : ${e.toString()}");
+      return null;
+    }
+  }
+
+  // Password reset
+  Future resetPasswordWithEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print("Error in Password reset : ${e.toString()}");
       return null;
     }
   }

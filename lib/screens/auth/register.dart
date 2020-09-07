@@ -1,3 +1,4 @@
+import 'package:coffeealert/constants/constant.dart';
 import 'package:coffeealert/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -43,9 +44,7 @@ class _RegisterState extends State<Register> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Email",
-                    ),
+                    decoration: textInputDecoration,
                     validator: (value) {
                       return value.isEmpty ? "Email can not be empty" : null;
                     },
@@ -59,9 +58,8 @@ class _RegisterState extends State<Register> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Password",
-                    ),
+                    decoration:
+                        textInputDecoration.copyWith(hintText: "Password"),
                     validator: (value) {
                       return value.length < 6
                           ? "Passsword must be greater than 6 character "
@@ -78,7 +76,7 @@ class _RegisterState extends State<Register> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: textInputDecoration.copyWith(
                       hintText: "Confirm Password",
                     ),
                     validator: (value) {
@@ -111,11 +109,11 @@ class _RegisterState extends State<Register> {
                     color: Colors.pink[400],
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        dynamic user =
-                            await _auth.registerWithEmail(email, password);
-                        if (user == null) {
+                        try {
+                          await _auth.registerWithEmail(email, password);
+                        } catch (e) {
                           setState(() {
-                            error = "Provide the valid email address";
+                            error = e.message;
                           });
                         }
                       }

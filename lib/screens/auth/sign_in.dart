@@ -1,3 +1,5 @@
+import 'package:coffeealert/constants/constant.dart';
+import 'package:coffeealert/screens/auth/forget_password.dart';
 import 'package:coffeealert/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
@@ -44,9 +46,7 @@ class _SignInState extends State<SignIn> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Email",
-                    ),
+                    decoration: textInputDecoration,
                     validator: (value) {
                       return value.isEmpty ? "Email can not be empty" : null;
                     },
@@ -60,9 +60,8 @@ class _SignInState extends State<SignIn> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Password",
-                    ),
+                    decoration:
+                        textInputDecoration.copyWith(hintText: "Password"),
                     validator: (value) {
                       return value.length < 6
                           ? "Passsword can not be less than 6 character"
@@ -146,6 +145,20 @@ class _SignInState extends State<SignIn> {
                         });
                       }
                     },
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ForgetPassword(),
+                        ),
+                      );
+                    },
+                    child: Text("Forget Password"),
                   )
                 ],
               ),
