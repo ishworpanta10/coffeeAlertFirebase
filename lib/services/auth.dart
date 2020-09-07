@@ -9,6 +9,21 @@ class AuthService {
     return user != null ? CustomUser(uid: user.uid) : null;
   }
 
+  // stream to find auth state
+  Stream<CustomUser> get user {
+    return _auth
+        .authStateChanges()
+        // ..listen((User user) {
+        //   if (user != null) {
+        //     print('Logged In User is : ${user.uid}');
+        //   } else {
+        //     print('User is currently sign out');
+        //   }
+        // })
+        // .map((User user) => _userFromFirebase(user));   same as down line
+        .map(_userFromFirebase);
+  }
+
   // sign in anonm
   Future signInAnon() async {
     try {
@@ -26,5 +41,12 @@ class AuthService {
   // register with email and psswd
 
   // sign out
-
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      print("Error in Log Out : ${e.toString()}");
+      return null;
+    }
+  }
 }
