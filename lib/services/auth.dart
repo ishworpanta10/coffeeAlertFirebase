@@ -81,14 +81,9 @@ class AuthService {
 
   // sign in anonm
   Future signInAnon() async {
-    try {
-      UserCredential userCredential = await _auth.signInAnonymously();
-      User user = userCredential.user;
-      return _userFromFirebase(user);
-    } catch (e) {
-      print("Anon Sign In Error: $e");
-      return null;
-    }
+    UserCredential userCredential = await _auth.signInAnonymously();
+    User user = userCredential.user;
+    return _userFromFirebase(user);
   }
 
   // sign in with email and psswd
