@@ -97,7 +97,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 } catch (e) {
                   print(e);
                   setState(() {
-                    error = "Failed to send reset password link";
+                    error = "Failed to send reset password Invalid request";
                   });
                 }
               },

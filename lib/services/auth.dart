@@ -129,11 +129,6 @@ class AuthService {
 
   // Password reset
   Future resetPasswordWithEmail(String email) async {
-    try {
-      await _auth.sendPasswordResetEmail(email: email);
-    } catch (e) {
-      print("Error in Password reset : ${e.toString()}");
-      return null;
-    }
+    await _auth.sendPasswordResetEmail(email: email);
   }
 }
