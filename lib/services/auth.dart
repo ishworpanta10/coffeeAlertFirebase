@@ -1,34 +1,12 @@
 import 'package:coffeealert/models/custom_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  // Future<User> signInWithGoogle() async {
-  //   final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-  //   final GoogleSignInAuthentication googleSignInAuthentication =
-  //       await googleSignInAccount.authentication;
-
-  //   final AuthCredential credential = GoogleAuthProvider.credential(
-  //       accessToken: googleSignInAuthentication.accessToken,
-  //       idToken: googleSignInAuthentication.idToken);
-  //   final UserCredential userCredential =
-  //       await _auth.signInWithCredential(credential);
-
-  //   final User user = userCredential.user;
-  //   assert(!user.isAnonymous);
-  //   assert(await user.getIdToken() != null);
-
-  //   final User currentUser = _auth.currentUser;
-  //   assert(user.uid == currentUser.uid);
-  //   print("ignInWithGoogle succeeded: $user");
-
-  //   return user;
-  // return 'signInWithGoogle succeeded: $user';
-  // }
 
   Future<User> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
@@ -47,6 +25,37 @@ class AuthService {
     } catch (e) {
       print("Google Sign In Error: $e");
       return null;
+    }
+  }
+
+  Future signInWithFacebook() async {
+    final fb = FacebookLogin();
+    final res = await fb.logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email,
+    ]);
+    switch (res.status) {
+      case FacebookLoginStatus.Success:
+        // Send access token to server for validation and auth
+        final FacebookAccessToken accessToken = res.accessToken;
+        print('Access token: ${accessToken.token}');
+        final AuthCredential credential =
+            FacebookAuthProvider.credential(accessToken.token);
+
+        final result = await _auth.signInWithCredential(credential);
+
+        final user = result.user;
+        print("Logged User : ${result.user}");
+        return user;
+
+        break;
+      case FacebookLoginStatus.Cancel:
+        // User cancel log in
+        break;
+      case FacebookLoginStatus.Error:
+        // Log in failed
+        print('Error while log in: ${res.error}');
+        break;
     }
   }
 

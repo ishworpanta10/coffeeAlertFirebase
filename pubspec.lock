@@ -139,13 +139,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.0"
-  flutter_facebook_auth:
+  flutter_login_facebook:
     dependency: "direct main"
     description:
-      name: flutter_facebook_auth
+      name: flutter_login_facebook
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4"
+    version: "0.2.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -212,6 +212,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.2"
+  list_ext:
+    dependency: transitive
+    description:
+      name: list_ext
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.13"
   matcher:
     dependency: transitive
     description:
