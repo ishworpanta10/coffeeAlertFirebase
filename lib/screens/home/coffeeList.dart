@@ -1,6 +1,6 @@
+import 'package:coffeealert/models/coffee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CoffeeList extends StatefulWidget {
   @override
@@ -10,11 +10,13 @@ class CoffeeList extends StatefulWidget {
 class _CoffeeListState extends State<CoffeeList> {
   @override
   Widget build(BuildContext context) {
-    final coffee = Provider.of<QuerySnapshot>(context);
-    // print(coffee.docs);
-    for (var item in coffee.docs) {
-      print(item.data());
-    }
+    final coffee = Provider.of<List<CoffeeModel>>(context);
+
+    coffee.forEach((item) {
+      print(item.name);
+      print(item.sugar);
+      print(item.strength);
+    });
 
     return Container();
   }

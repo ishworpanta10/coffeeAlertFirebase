@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffeealert/models/coffee_model.dart';
 import 'package:coffeealert/screens/home/coffeeList.dart';
 import 'package:coffeealert/services/auth.dart';
 import 'package:coffeealert/services/firebaseService.dart';
@@ -9,7 +9,7 @@ class Home extends StatelessWidget {
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
+    return StreamProvider<List<CoffeeModel>>.value(
       value: FirebaseService().coffeeStream,
       child: Scaffold(
         backgroundColor: Colors.brown[100],
