@@ -1,4 +1,5 @@
 import 'package:coffeealert/models/custom_user.dart';
+import 'package:coffeealert/services/firebaseService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
@@ -20,6 +21,10 @@ class AuthService {
       UserCredential userCredential =
           await _auth.signInWithCredential(credential);
       User user = userCredential.user;
+      // setting new collection of user data in firestor
+      FirebaseService(uid: user.uid)
+          .updateData(name: "Dummy Name", sugar: "2", strength: 100);
+
       print("Logged in user : ${user.displayName}");
       return user;
     } catch (e) {
@@ -46,6 +51,9 @@ class AuthService {
 
         final user = result.user;
         print("Logged User : ${result.user}");
+        // setting new collection of user data in firestor
+        FirebaseService(uid: user.uid)
+            .updateData(name: "Dummy Name", sugar: "2", strength: 100);
         return user;
 
         break;
@@ -100,16 +108,14 @@ class AuthService {
   }
 
   // register with email and psswd
-  Future registerWithEmail(String email, String password) async {
-    // try {
+  Future<CustomUser> registerWithEmail(String email, String password) async {
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
     User user = userCredential.user;
+    // setting new collection of user data in firestore
+    FirebaseService(uid: user.uid)
+        .updateData(name: "Dummy Name", sugar: "2", strength: 100);
     return _userFromFirebase(user);
-    // } catch (e) {
-    //   print("Email Register Error: ${e.toString()}");
-    //   return null;
-    // }
   }
 
   // sign out

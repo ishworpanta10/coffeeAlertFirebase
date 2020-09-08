@@ -1,26 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffeealert/screens/home/coffeeList.dart';
 import 'package:coffeealert/services/auth.dart';
+import 'package:coffeealert/services/firebaseService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.brown[100],
-      appBar: AppBar(
-        backgroundColor: Colors.brown[400],
-        title: Text("Home"),
-        elevation: 0.0,
-      ),
-      body: Center(
-        child: Container(
-          child: RaisedButton(
-            onPressed: () async {
-              await _auth.signOut();
-            },
-            child: Text("Log Out"),
-          ),
+    return StreamProvider<QuerySnapshot>.value(
+      value: FirebaseService().coffeeStream,
+      child: Scaffold(
+        backgroundColor: Colors.brown[100],
+        appBar: AppBar(
+          backgroundColor: Colors.brown[400],
+          title: Text("Home"),
+          elevation: 0.0,
+          actions: [
+            FlatButton(
+              onPressed: () async {
+                await _auth.signOut();
+              },
+              child: Text(
+                "Log Out",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
         ),
+        body: CoffeeList(),
       ),
     );
   }
