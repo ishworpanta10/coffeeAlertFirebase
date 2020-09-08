@@ -2,7 +2,6 @@ import 'package:coffeealert/constants/constant.dart';
 import 'package:coffeealert/constants/loading.dart';
 import 'package:coffeealert/screens/auth/forget_password.dart';
 import 'package:coffeealert/services/auth.dart';
-import 'package:coffeealert/services/firebaseService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
@@ -141,7 +140,7 @@ class _SignInState extends State<SignIn> {
                               loading = true;
                             });
                             dynamic user = await _auth.signInWithGoogle();
-                            FirebaseService(uid: user.uid).updateData();
+
                             if (user == null) {
                               setState(() {
                                 loading = false;
@@ -161,7 +160,6 @@ class _SignInState extends State<SignIn> {
                               });
                               dynamic user = await _auth.signInWithFacebook();
                               print("User id : ${user.uid}");
-                              FirebaseService(uid: user.uid).updateData();
                             } catch (e) {
                               setState(() {
                                 loading = false;

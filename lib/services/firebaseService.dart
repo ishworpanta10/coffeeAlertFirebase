@@ -19,10 +19,11 @@ class FirebaseService {
   List<CoffeeModel> _listCoffeeFromSnap(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return CoffeeModel(
-          name: doc.data()['name'],
-          sugar: doc.data()['sugar'],
-          strength: doc.data()['strength']);
-    });
+        name: doc.data()['name'],
+        sugar: doc.data()['sugar'],
+        strength: doc.data()['strength'],
+      );
+    }).toList();
   }
 
   // getting stream from firestore

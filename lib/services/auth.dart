@@ -50,10 +50,11 @@ class AuthService {
         final result = await _auth.signInWithCredential(credential);
 
         final user = result.user;
-        print("Logged User : ${result.user}");
         // setting new collection of user data in firestor
         FirebaseService(uid: user.uid)
-            .updateData(name: "Dummy Name", sugar: "2", strength: 100);
+            .updateData(name: "Ishworr Panta", sugar: "2", strength: 100);
+        print("Logged User : ${result.user}");
+
         return user;
 
         break;

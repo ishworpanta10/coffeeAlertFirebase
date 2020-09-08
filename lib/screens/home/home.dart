@@ -1,5 +1,6 @@
 import 'package:coffeealert/models/coffee_model.dart';
 import 'package:coffeealert/screens/home/coffeeList.dart';
+import 'package:coffeealert/screens/home/setting_form.dart';
 import 'package:coffeealert/services/auth.dart';
 import 'package:coffeealert/services/firebaseService.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,18 @@ class Home extends StatelessWidget {
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
+    _showSetting() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: SettingForm(),
+            );
+          });
+    }
+
     return StreamProvider<List<CoffeeModel>>.value(
       value: FirebaseService().coffeeStream,
       child: Scaffold(
@@ -27,6 +40,10 @@ class Home extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
             ),
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () => _showSetting(),
+            )
           ],
         ),
         body: CoffeeList(),
