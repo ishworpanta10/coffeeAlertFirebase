@@ -26,10 +26,25 @@ class FirebaseService {
     }).toList();
   }
 
+  // converting doc snapshot to user model
+  UserModel _userModelFromDocSnap(DocumentSnapshot snapshot) {
+    return UserModel(
+      uid: uid,
+      name: snapshot.data()['name'],
+      sugar: snapshot.data()['sugar'],
+      strength: snapshot.data()['strength'],
+    );
+  }
+
   // getting stream from firestore
   Stream<List<CoffeeModel>> get coffeeStream {
     return coffeeReference.snapshots().map(
         // (snap) => _listCoffeeFromSnap(snap).toList(),  same as below
         _listCoffeeFromSnap);
+  }
+
+  // getting user documents
+  Stream<UserModel> get userStream {
+    return coffeeReference.doc(uid).snapshots().map(_userModelFromDocSnap);
   }
 }
