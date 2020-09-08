@@ -88,8 +88,13 @@ class _SettingFormState extends State<SettingForm> {
                 RaisedButton(
                   color: Colors.pink[400],
                   onPressed: () async {
-                    print(_currentName);
-                    print(_currentSugars);
+                    if (_formKey.currentState.validate()) {
+                      await FirebaseService(uid: user.uid).updateData(
+                        name: _currentName ?? userData.name,
+                        sugar: _currentSugars ?? userData.sugar,
+                        strength: _currentStrength ?? userData.strength,
+                      );
+                    }
                     Navigator.pop(context);
                   },
                   child: Text(
