@@ -18,6 +18,7 @@ class _SettingFormState extends State<SettingForm> {
   String _currentName;
   String _currentSugars;
   int _currentStrength;
+  String _currentImgUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +94,7 @@ class _SettingFormState extends State<SettingForm> {
                         name: _currentName ?? userData.name,
                         sugar: _currentSugars ?? userData.sugar,
                         strength: _currentStrength ?? userData.strength,
+                        imgUrl: _currentImgUrl ?? userData.imgUrl,
                       );
                     }
                     Navigator.pop(context);

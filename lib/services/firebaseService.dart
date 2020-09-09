@@ -8,8 +8,10 @@ class FirebaseService {
   final CollectionReference coffeeReference =
       FirebaseFirestore.instance.collection('coffee');
 
-  Future updateData({String sugar, String name, int strength}) async {
+  Future updateData(
+      {String imgUrl, String sugar, String name, int strength}) async {
     await coffeeReference.doc(uid).set({
+      "imgUrl": imgUrl,
       "name": name,
       "sugar": sugar,
       "strength": strength,
@@ -19,21 +21,21 @@ class FirebaseService {
   List<CoffeeModel> _listCoffeeFromSnap(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return CoffeeModel(
-        name: doc.data()['name'],
-        sugar: doc.data()['sugar'],
-        strength: doc.data()['strength'],
-      );
+          name: doc.data()['name'],
+          sugar: doc.data()['sugar'],
+          strength: doc.data()['strength'],
+          imgUrl: doc.data()['imgUrl']);
     }).toList();
   }
 
   // converting doc snapshot to user model
   UserModel _userModelFromDocSnap(DocumentSnapshot snapshot) {
     return UserModel(
-      uid: uid,
-      name: snapshot.data()['name'],
-      sugar: snapshot.data()['sugar'],
-      strength: snapshot.data()['strength'],
-    );
+        uid: uid,
+        name: snapshot.data()['name'],
+        sugar: snapshot.data()['sugar'],
+        strength: snapshot.data()['strength'],
+        imgUrl: snapshot.data()['imgUrl']);
   }
 
   // getting stream from firestore

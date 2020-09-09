@@ -22,8 +22,12 @@ class AuthService {
           await _auth.signInWithCredential(credential);
       User user = userCredential.user;
       // setting new collection of user data in firestor
-      FirebaseService(uid: user.uid)
-          .updateData(name: user.displayName, sugar: "2", strength: 100);
+      FirebaseService(uid: user.uid).updateData(
+          imgUrl: user.photoURL ??
+              "https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png",
+          name: user.displayName,
+          sugar: "2",
+          strength: 100);
 
       return user;
     } catch (e) {
@@ -50,10 +54,12 @@ class AuthService {
 
         final user = result.user;
         // setting new collection of user data in firestor
-        FirebaseService(uid: user.uid)
-            .updateData(name: user.displayName, sugar: "2", strength: 100);
-        print("Logged User : ${result.user}");
-
+        FirebaseService(uid: user.uid).updateData(
+            imgUrl: user.photoURL ??
+                "https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png",
+            name: user.displayName,
+            sugar: "2",
+            strength: 100);
         return user;
 
         break;
@@ -112,11 +118,13 @@ class AuthService {
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
     User user = userCredential.user;
-    // setting new collection of user data in firestore
-    print(user.email);
-    print(user.displayName);
-    FirebaseService(uid: user.uid)
-        .updateData(name: user.email, sugar: "2", strength: 100);
+    // setting new collection of user data in firestor
+    FirebaseService(uid: user.uid).updateData(
+        imgUrl: user.photoURL ??
+            "https://e7.pngegg.com/pngimages/981/645/png-clipart-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette.png",
+        name: user.email,
+        sugar: "2",
+        strength: 100);
     return _userFromFirebase(user);
   }
 

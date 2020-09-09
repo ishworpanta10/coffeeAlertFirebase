@@ -2,8 +2,9 @@ class CoffeeModel {
   final String name;
   final String sugar;
   final int strength;
+  final String imgUrl;
 
-  CoffeeModel({this.name, this.sugar, this.strength});
+  CoffeeModel({this.name, this.sugar, this.strength, this.imgUrl});
 }
 
 class UserModel {
@@ -11,6 +12,7 @@ class UserModel {
   final String name;
   final String sugar;
   final int strength;
+  final String imgUrl;
 
-  UserModel({this.uid, this.name, this.sugar, this.strength});
+  UserModel({this.uid, this.name, this.sugar, this.strength, this.imgUrl});
 }

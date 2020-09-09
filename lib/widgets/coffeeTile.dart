@@ -13,6 +13,10 @@ class CoffeeTile extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
           leading: CircleAvatar(
+            backgroundColor: Colors.brown[100],
+            backgroundImage: NetworkImage(coffee.imgUrl ?? ""),
+          ),
+          trailing: CircleAvatar(
             radius: 25.0,
             backgroundImage: AssetImage("assets/images/coffee_icon.png"),
             backgroundColor: Colors.brown[coffee.strength],
