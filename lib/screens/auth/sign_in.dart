@@ -171,23 +171,23 @@ class _SignInState extends State<SignIn> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        RaisedButton(
-                          color: Colors.brown[100],
-                          onPressed: () async {
-                            setState(() {
-                              loading = true;
-                            });
-                            try {
-                              await _auth.signInAnon();
-                            } catch (e) {
-                              setState(() {
-                                error = e.message;
-                                loading = false;
-                              });
-                            }
-                          },
-                          child: Text("Sign in Anony"),
-                        ),
+                        // RaisedButton(
+                        //   color: Colors.brown[100],
+                        //   onPressed: () async {
+                        //     setState(() {
+                        //       loading = true;
+                        //     });
+                        //     try {
+                        //       await _auth.signInAnon();
+                        //     } catch (e) {
+                        //       setState(() {
+                        //         error = e.message;
+                        //         loading = false;
+                        //       });
+                        //     }
+                        //   },
+                        //   child: Text("Sign in Anony"),
+                        // ),
                         SizedBox(
                           height: 10.0,
                         ),
