@@ -14,7 +14,8 @@ class Home extends StatelessWidget {
       showModalBottomSheet(
           context: context,
           builder: (context) {
-            return Padding(
+            return Container(
+              color: Colors.brown[100],
               padding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
               child: SettingForm(),
@@ -49,9 +50,8 @@ class Home extends StatelessWidget {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/coffee_bg.png"),
-              fit: BoxFit.cover
-            ),
+                image: AssetImage("assets/images/coffee_bg.png"),
+                fit: BoxFit.cover),
           ),
           child: CoffeeList(),
         ),

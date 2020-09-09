@@ -18,6 +18,7 @@ class _RegisterState extends State<Register> {
   // form fields state
   String email = "";
   String password = "";
+  String confirmPassword = "";
   String error = "";
   bool loading = false;
 
@@ -86,18 +87,17 @@ class _RegisterState extends State<Register> {
                             hintText: "Confirm Password",
                           ),
                           validator: (value) {
-                            if (value.length < 6) {
+                            if (value.length < 6)
                               return "Passsword must be greater than 6 character ";
-                            }
-                            if (value != password) {
+                            if (confirmPassword != password)
                               return "Passsword do not match ";
-                            }
+
                             return null;
                           },
                           obscureText: true,
                           onChanged: (value) {
                             setState(() {
-                              password = value;
+                              confirmPassword = value;
                             });
                           },
                         ),

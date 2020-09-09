@@ -23,9 +23,8 @@ class AuthService {
       User user = userCredential.user;
       // setting new collection of user data in firestor
       FirebaseService(uid: user.uid)
-          .updateData(name: "Dummy Name", sugar: "2", strength: 100);
+          .updateData(name: user.displayName, sugar: "2", strength: 100);
 
-      print("Logged in user : ${user.displayName}");
       return user;
     } catch (e) {
       print("Google Sign In Error: $e");
@@ -52,7 +51,7 @@ class AuthService {
         final user = result.user;
         // setting new collection of user data in firestor
         FirebaseService(uid: user.uid)
-            .updateData(name: "Ishworr Panta", sugar: "2", strength: 100);
+            .updateData(name: user.displayName, sugar: "2", strength: 100);
         print("Logged User : ${result.user}");
 
         return user;
@@ -114,8 +113,10 @@ class AuthService {
         email: email, password: password);
     User user = userCredential.user;
     // setting new collection of user data in firestore
+    print(user.email);
+    print(user.displayName);
     FirebaseService(uid: user.uid)
-        .updateData(name: "Dummy Name", sugar: "2", strength: 100);
+        .updateData(name: user.email, sugar: "2", strength: 100);
     return _userFromFirebase(user);
   }
 
